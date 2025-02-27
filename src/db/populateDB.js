@@ -5,8 +5,7 @@ dotenv.config({ path: __dirname + "/.env" });
 const SQL = `
 CREATE TABLE IF NOT EXISTS authors (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-  firstName VARCHAR(50),
-  lastName VARCHAR(50)
+  name VARCHAR(100)
 );
 
 CREATE TABLE IF NOT EXISTS genres(
@@ -24,17 +23,17 @@ CREATE TABLE IF NOT EXISTS books(
   FOREIGN KEY (genre_id) REFERENCES genres(id)
 );
 
-INSERT INTO authors (firstName, lastName) VALUES
-('Fiodor', 'Dostojewski'),
-('Henryk', 'Sienkiewicz'),
-('Jane', 'Austen'),
-('Charles', 'Dickens'),
-('Victor', 'Hugo'),
-('Jules', 'Verne'),
-('Ernest', 'Hemingway'),
-('John', 'Grisham'),
-('Danielle', 'Steel'),
-('Sidney', 'Sheldon');
+INSERT INTO authors (name) VALUES
+('Fiodor Dostojewski'),
+('Henryk Sienkiewicz'),
+('Jane Austen'),
+('Charles Dickens'),
+('Victor Hugo'),
+('Jules Verne'),
+('Ernest Hemingway'),
+('John Grisham'),
+('Danielle Steel'),
+('Sidney Sheldon');
 
 INSERT INTO genres (name) VALUES
 ('Romance'),
@@ -69,19 +68,16 @@ INSERT INTO books (title, author_id, genre_id, quantity) VALUES
 ('Great Expectations', 4, 10, 20),
 ('Around the World in Eighty Days', 6, 2, 14),
 ('To Have and Have Not', 7, 10, 17),
+('The Brothers Karamazov', 1, 10, 2),
 ('The Client', 8, 5, 2);
 `;
 
-console.log(process.env.PGDATABASE);
 async function populateDB() {
-  console.log("seeding...");
   const client = new Client({
     connectionString: `postgresql://${process.env.PGUSER}:${process.env.PGPASSWORD}@${process.env.PGHOST}:${process.env.PGPORT}/${process.env.PGDATABASE}`,
   });
   await client.connect();
   await client.query(SQL);
   await client.end();
-  console.log("done");
 }
-populateDB();
 module.exports = { populateDB };
