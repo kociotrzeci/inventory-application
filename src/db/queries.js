@@ -78,8 +78,9 @@ async function getAuthorByID(id) {
       pool.query("SELECT title FROM books WHERE author_id=$1", [id]),
       pool.query("SELECT name FROM authors WHERE id=$1", [id]),
     ]);
+    const titles = book.rows.map((row) => row.title);
     return {
-      title: book.rows[0],
+      title: titles,
       name: author.rows[0].name,
     };
   } catch (error) {
@@ -88,7 +89,20 @@ async function getAuthorByID(id) {
   }
 }
 async function getGenreByID(id) {
-  return await pool.query("SELECT * FROM books WHERE id=$1"[id]);
+  try {
+    const [book, genre] = await Promise.all([
+      pool.query("SELECT title FROM books WHERE genre_id=$1", [id]),
+      pool.query("SELECT name FROM genres WHERE id=$1", [id]),
+    ]);
+    const titles = book.rows.map((row) => row.title);
+    return {
+      title: titles,
+      name: genre.rows[0].name,
+    };
+  } catch (error) {
+    console.error("Error querying genres: ", error);
+    return null;
+  }
 }
 module.exports = {
   stopPool,
@@ -98,4 +112,5 @@ module.exports = {
   getAllGenres,
   getBookByID,
   getAuthorByID,
+  getGenreByID,
 };

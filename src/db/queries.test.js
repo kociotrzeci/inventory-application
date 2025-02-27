@@ -1,15 +1,16 @@
 const queries = require("./queries.js");
 const { populateDB } = require("./populateDB.js");
 const { dropDB } = require("./dropDB.js");
-
+/*
 beforeAll(async () => {
   await populateDB();
 });
+
 afterAll(async () => {
   await dropDB();
   await queries.stopPool();
 });
-
+*/
 describe("database interface", () => {
   it("should return number of entities", async () => {
     const entieties = await queries.getAllInfo();
@@ -43,11 +44,17 @@ describe("database interface", () => {
     expect(info.author.id).toBe(1);
     expect(info.genre.id).toBe(10);
   });
-  it("get author info", async () => {
+  it("get author with his books", async () => {
     const info = await queries.getAuthorByID(1);
-    console.log(info);
     expect(info).not.toBeNull();
     expect(Array.isArray(info.title)).toBe(true);
     expect(info.name).toBe("Fiodor Dostojewski");
+  });
+  it("get genres books", async () => {
+    const info = await queries.getGenreByID(1);
+    console.log(info);
+    expect(info).not.toBeNull();
+    expect(Array.isArray(info.title)).toBe(true);
+    expect(info.name).toBe("Romance");
   });
 });
