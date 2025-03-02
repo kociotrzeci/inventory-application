@@ -1,0 +1,10 @@
+<h2>Authors</h2>
+<ul>
+  <% for(const author of authors){ %>
+  <li>
+    <a href=<%=`/authors/${author.id}`%>>
+      <h5><%=author.name%></h5>
+    </a>
+  </li>
+  <% } %>
+</ul>

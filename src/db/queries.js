@@ -34,8 +34,12 @@ async function getAllBooks() {
 }
 async function getAllAuthors() {
   try {
-    const result = await pool.query("SELECT name FROM authors");
-    return result.rows;
+    const result = await pool.query("SELECT name, ID FROM authors");
+    const response = result.rows.map((row) => ({
+      name: row.name,
+      id: row.id,
+    }));
+    return response;
   } catch (error) {
     console.error("Error querying authors: ", error);
     return null;
@@ -80,12 +84,12 @@ async function getBookByID(id) {
 async function getAuthorByID(id) {
   try {
     const [book, author] = await Promise.all([
-      pool.query("SELECT title FROM books WHERE author_id=$1", [id]),
+      pool.query("SELECT title, id FROM books WHERE author_id=$1", [id]),
       pool.query("SELECT name FROM authors WHERE id=$1", [id]),
     ]);
-    const titles = book.rows.map((row) => row.title);
+    const titles = book.rows.map((row) => ({ title: row.title, id: row.id }));
     return {
-      title: titles,
+      titles: titles,
       name: author.rows[0].name,
     };
   } catch (error) {

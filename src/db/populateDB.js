@@ -58,7 +58,6 @@ INSERT INTO books (title, author_id, genre_id, quantity) VALUES
 ('The Firm', 8, 5, 0),
 ('Jewels', 9, 1, 0),
 ('Master of the Game', 10, 5, 0),
-('War and Peace', 1, 7, 54),
 ('David Copperfield', 4, 10, 7),
 ('Journey to the Centre of the Earth', 6, 2, 15),
 ('A Farewell to Arms', 7, 10, 13),

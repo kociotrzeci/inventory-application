@@ -1,11 +1,15 @@
-<h4><%= book.title %></h2>
-<p>Author: 
-    <a href=<%= `/authors/${book.author.id}`%>>
-        <%= book.author.name %>
-    </a>
-</p>
-<p>Genre: 
-    <a href=<%= `/genres/${book.genre.id}`%>>
-        <%= book.genre.name %>
-    </a>
-</p>
+<div class="book-info">
+    <h4><%= book.title %></h2>
+        <p>Quantity: <%= book.quantity %>
+    </p>
+    <p>Author:
+        <a href=<%= `/authors/${book.author.id}`%>>
+            <%= book.author.name %>
+        </a>
+    </p>
+    <p>Genre:
+        <a href=<%= `/genres/${book.genre.id}`%>>
+            <%= book.genre.name %>
+        </a>
+    </p>
+</div>

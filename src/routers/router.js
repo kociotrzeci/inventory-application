@@ -1,9 +1,12 @@
 const { Router } = require("express");
 
-const { indexGET } = require("../controllers/index");
-const { booksGET, bookGET } = require("../controllers/books");
+const index = require("../controllers/index");
+const books = require("../controllers/books");
+const authors = require("../controllers/authors");
 const router = Router();
-router.get("/", indexGET);
-router.get("/books", booksGET);
-router.get("/books/:id", bookGET);
+router.get("/", index.indexGET);
+router.get("/books", books.booksGET);
+router.get("/books/:id", books.bookGET);
+router.get("/authors", authors.authorsGET);
+router.get("/authors/:id", authors.authorGET);
 module.exports = { router };
