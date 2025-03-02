@@ -1,0 +1,11 @@
+<h4><%= book.title %></h2>
+<p>Author: 
+    <a href=<%= `/authors/${book.author.id}`%>>
+        <%= book.author.name %>
+    </a>
+</p>
+<p>Genre: 
+    <a href=<%= `/genres/${book.genre.id}`%>>
+        <%= book.genre.name %>
+    </a>
+</p>

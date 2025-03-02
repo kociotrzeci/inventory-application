@@ -1,3 +1,4 @@
+const { response } = require("express");
 const pool = require("./pool");
 
 async function stopPool() {
@@ -20,8 +21,12 @@ async function getAllInfo() {
 
 async function getAllBooks() {
   try {
-    const result = await pool.query("SELECT title FROM books");
-    return result.rows;
+    const result = await pool.query("SELECT title, ID FROM books");
+    const response = result.rows.map((row) => ({
+      title: row.title,
+      id: row.id,
+    }));
+    return response;
   } catch (error) {
     console.error("Error quering DB: ", error);
     return null;

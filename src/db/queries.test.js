@@ -1,27 +1,32 @@
 const queries = require("./queries.js");
 const { populateDB } = require("./populateDB.js");
 const { dropDB } = require("./dropDB.js");
-/*
+
 beforeAll(async () => {
+  await dropDB();
   await populateDB();
 });
 
 afterAll(async () => {
-  await dropDB();
   await queries.stopPool();
 });
-*/
+
 describe("database interface", () => {
   it("should return number of entities", async () => {
     const entieties = await queries.getAllInfo();
-    expect(Number(entieties.booksCount)).toBeGreaterThan(20);
+    expect(Number(entieties.booksCount)).toBe(22);
     expect(Number(entieties.authorsCount)).toBe(10);
     expect(Number(entieties.genresCount)).toBe(10);
   });
   it("should get all books", async () => {
     const books = await queries.getAllBooks();
+    books.forEach((book) => {
+      console.log(book);
+    });
     expect(Array.isArray(books)).toBe(true);
     expect(books).not.toBeNull();
+    expect(books[0].id).toBe(1);
+    expect(books[0].title).toBe("Crime and Punishment");
   });
   it("should get all authors", async () => {
     const authors = await queries.getAllAuthors();
@@ -52,7 +57,6 @@ describe("database interface", () => {
   });
   it("get genres books", async () => {
     const info = await queries.getGenreByID(1);
-    console.log(info);
     expect(info).not.toBeNull();
     expect(Array.isArray(info.title)).toBe(true);
     expect(info.name).toBe("Romance");

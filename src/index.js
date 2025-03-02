@@ -9,7 +9,7 @@ const { router } = require("./routers/router.js");
 app.set("views", viewsPath);
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
-app.get("/", router);
+app.use("/", router);
 
 app.listen(process.env.PORT, () => {
   console.log(`listening on port: ${process.env.PORT}`);
