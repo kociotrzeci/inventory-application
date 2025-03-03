@@ -1,15 +1,18 @@
 const queries = require("../db/queries");
 
-async function authorsGET(req, res) {
+async function authorsGET(req, res, next) {
   const authors = await queries.getAllAuthors();
+
   res.render("authors", { authors: authors });
-  console.log("/authors");
-  console.log(authors);
 }
-async function authorGET(req, res) {
-  const ID = req.params.id;
-  const author = await queries.getAuthorByID(ID);
-  res.render("author", { author: author });
+async function authorGET(req, res, next) {
+  try {
+    const ID = req.params.id;
+    const author = await queries.getAuthorByID(ID);
+    res.render("author", { author: author });
+  } catch (error) {
+    next(error);
+  }
 }
 
 module.exports = {

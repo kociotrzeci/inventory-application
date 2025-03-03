@@ -48,7 +48,6 @@ describe("database interface", () => {
   });
   it("get author with his books", async () => {
     const info = await queries.getAuthorByID(1);
-    console.log(info.titles);
     expect(info).not.toBeNull();
     expect(Array.isArray(info.titles)).toBe(true);
     expect(info.name).toBe("Fiodor Dostojewski");
@@ -57,7 +56,8 @@ describe("database interface", () => {
   it("get genres books", async () => {
     const info = await queries.getGenreByID(1);
     expect(info).not.toBeNull();
-    expect(Array.isArray(info.title)).toBe(true);
+    expect(Array.isArray(info.titles)).toBe(true);
     expect(info.name).toBe("Romance");
+    expect(info.titles[0].title).toBe("Pride and Prejudice");
   });
 });

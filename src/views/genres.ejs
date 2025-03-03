@@ -1,0 +1,10 @@
+<h2>genres</h2>
+<ul>
+  <% for(const genre of genres){ %>
+  <li>
+    <a href=<%=`/genres/${genre.id}`%>>
+      <h5><%=genre.name%></h5>
+    </a>
+  </li>
+  <% } %>
+</ul>
