@@ -20,44 +20,29 @@ async function getAllInfo() {
 }
 
 async function getAllBooks() {
-  try {
-    const result = await pool.query("SELECT title, ID FROM books");
-    const response = result.rows.map((row) => ({
-      title: row.title,
-      id: row.id,
-    }));
-    return response;
-  } catch (error) {
-    console.error("Error quering DB: ", error);
-    return null;
-  }
+  const result = await pool.query("SELECT title, ID FROM books");
+  const response = result.rows.map((row) => ({
+    title: row.title,
+    id: row.id,
+  }));
+  return response;
 }
 async function getAllAuthors() {
-  try {
-    const result = await pool.query("SELECT name, ID FROM authors");
-    const response = result.rows.map((row) => ({
-      name: row.name,
-      id: row.id,
-    }));
-    return response;
-  } catch (error) {
-    console.error("Error querying authors: ", error);
-    return null;
-  }
+  const result = await pool.query("SELECT name, ID FROM authors");
+  const response = result.rows.map((row) => ({
+    name: row.name,
+    id: row.id,
+  }));
+  return response;
 }
 
 async function getAllGenres() {
-  try {
-    const result = await pool.query("SELECT name, ID FROM genres");
-    const response = result.rows.map((row) => ({
-      name: row.name,
-      id: row.id,
-    }));
-    return response;
-  } catch (error) {
-    console.error("Error querying authors: ", error);
-    return null;
-  }
+  const result = await pool.query("SELECT name, ID FROM genres");
+  const response = result.rows.map((row) => ({
+    name: row.name,
+    id: row.id,
+  }));
+  return response;
 }
 
 async function getBookByID(id) {
