@@ -1,9 +1,12 @@
 const queries = require("../db/queries");
 
 async function authorsGET(req, res, next) {
-  const authors = await queries.getAllAuthors();
-
-  res.render("authors", { authors: authors });
+  try {
+    const authors = await queries.getAllAuthors();
+    res.render("authors", { authors: authors });
+  } catch (error) {
+    next(error);
+  }
 }
 async function authorGET(req, res, next) {
   try {

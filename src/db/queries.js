@@ -61,64 +61,54 @@ async function getAllGenres() {
 }
 
 async function getBookByID(id) {
-  try {
-    const [book, author, genre] = await Promise.all([
-      pool.query("SELECT title, quantity FROM books WHERE id=$1", [id]),
-      pool.query(
-        "SELECT name, id FROM authors WHERE id=(SELECT author_id FROM books WHERE id=$1)",
-        [id]
-      ),
-      pool.query(
-        "SELECT name, id FROM genres WHERE id=(SELECT genre_id FROM books WHERE id=$1)",
-        [id]
-      ),
-    ]);
-    return {
-      title: book.rows[0].title,
-      quantity: book.rows[0].quantity,
-      author: { name: author.rows[0].name, id: author.rows[0].id },
-      genre: { name: genre.rows[0].name, id: genre.rows[0].id },
-    };
-  } catch (error) {
-    console.error("Error querying genres: ", error);
-    return null;
+  const [book, author, genre] = await Promise.all([
+    pool.query("SELECT title, quantity FROM books WHERE id=$1", [id]),
+    pool.query(
+      "SELECT name, id FROM authors WHERE id=(SELECT author_id FROM books WHERE id=$1)",
+      [id]
+    ),
+    pool.query(
+      "SELECT name, id FROM genres WHERE id=(SELECT genre_id FROM books WHERE id=$1)",
+      [id]
+    ),
+  ]);
+  if (book.rows.length === 0) {
+    throw new Error("No data found for the given book ID");
   }
+  return {
+    title: book.rows[0].title,
+    quantity: book.rows[0].quantity,
+    author: { name: author.rows[0].name, id: author.rows[0].id },
+    genre: { name: genre.rows[0].name, id: genre.rows[0].id },
+  };
 }
 
 async function getAuthorByID(id) {
-  try {
-    const [book, author] = await Promise.all([
-      pool.query("SELECT title, id FROM books WHERE author_id=$1", [id]),
-      pool.query("SELECT name FROM authors WHERE id=$1", [id]),
-    ]);
-    if (author.rows.length === 0) {
-      throw new Error("No data found for the given author ID");
-    }
-    const titles = book.rows.map((row) => ({ title: row.title, id: row.id }));
-    return {
-      titles: titles,
-      name: author.rows[0].name,
-    };
-  } catch (error) {
-    throw error;
+  const [book, author] = await Promise.all([
+    pool.query("SELECT title, id FROM books WHERE author_id=$1", [id]),
+    pool.query("SELECT name FROM authors WHERE id=$1", [id]),
+  ]);
+  if (author.rows.length === 0) {
+    throw new Error("No data found for the given author ID");
   }
+  const titles = book.rows.map((row) => ({ title: row.title, id: row.id }));
+  return {
+    titles: titles,
+    name: author.rows[0].name,
+  };
 }
 async function getGenreByID(id) {
-  try {
-    const [book, genre] = await Promise.all([
-      pool.query("SELECT title, id FROM books WHERE genre_id=$1", [id]),
-      pool.query("SELECT name FROM genres WHERE id=$1", [id]),
-    ]);
-    const titles = book.rows.map((row) => ({ title: row.title, id: row.id }));
-    return {
-      titles: titles,
-      name: genre.rows[0].name,
-    };
-  } catch (error) {
-    console.error("Error querying genres: ", error);
-    return null;
-  }
+  const [book, genre] = await Promise.all([
+    pool.query("SELECT title, id FROM books WHERE genre_id=$1", [id]),
+    pool.query("SELECT name FROM genres WHERE id=$1", [id]),
+  ]);
+  const titles = book.rows.map((row) => ({ title: row.title, id: row.id }));
+  return {
+    titles: titles,
+    name: genre.rows[0].name,
+  };
 }
+
 module.exports = {
   stopPool,
   getAllInfo,
