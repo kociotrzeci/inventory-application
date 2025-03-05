@@ -1,0 +1,36 @@
+<div class="book-info">
+  <form method="POST" action="/book/<%= book.id %>/edit">
+    <label for="title">Title:</label>
+    <input
+      type="text"
+      name="title"
+      minlength="1"
+      maxlength="100"
+      value="<%= book.title %>"
+    />
+    <label for="author">Author:</label>
+    <input
+      type="text"
+      name="author"
+      minlength="1"
+      maxlength="100"
+      value="<%= book.author %>"
+    />
+    <label for="genre">Genre:</label>
+    <input
+      type="text"
+      name="genre"
+      minlength="1"
+      maxlength="100"
+      value="<%= book.genre %>"
+    />
+    <label for="quantity">Quantity:</label>
+    <input
+      type="number"
+      name="quantity"
+      min="0"
+      max="10000"
+      value="<%= book.quantity %>"
+    />
+  </form>
+</div>

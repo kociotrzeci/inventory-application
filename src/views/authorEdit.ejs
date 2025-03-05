@@ -1,0 +1,13 @@
+<div class="author-info">
+    <h4><%= author.name %></h4>
+  <ul>
+    <% for(const book of author.titles){ %>
+        <li>
+          <a href=<%=`/books/${book.id}`%>>
+            <h5><%=book.title%></h5>
+          </a>
+        </li>
+    <% } %>
+  </ul>
+
+</div>
