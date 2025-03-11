@@ -8,6 +8,8 @@ const router = Router();
 router.get("/", index.indexGET);
 router.get("/books", books.booksGET);
 router.get("/books/:id", books.bookGET);
+router.get("/books/:id/edit", books.bookEDIT);
+router.post("/books/:id/edit", books.bookEDITpost);
 router.get("/authors", authors.authorsGET);
 router.get("/authors/:id", authors.authorGET);
 router.get("/genres", genres.genresGET);

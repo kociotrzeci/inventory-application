@@ -99,8 +99,12 @@ async function getGenreByID(id) {
 // ------ UPDATE ---------
 async function updateBook(book) {
   const [author, genre] = await Promise.all([
-    pool.query("SELECT id FROM authors WHERE name=$1", [book.author]),
-    pool.query("SELECT id FROM genres WHERE name=$1", [book.genre]),
+    pool.query("SELECT id FROM authors WHERE LOWER(name)=LOWER($1)", [
+      book.author,
+    ]),
+    pool.query("SELECT id FROM genres WHERE LOWER(name)=LOWER($1)", [
+      book.genre,
+    ]),
   ]);
   if (author.rows.length === 0) {
     throw new Error("No such author");
