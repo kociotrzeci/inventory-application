@@ -12,5 +12,9 @@
             <%= book.genre.name %>
         </a>
     </p>
-    <a href=<%= `/books/${book.id}/edit` %>><button>EDIT</button></a>
+    <a href=<%= `/book/${book.id}/edit` %>><button>EDIT</button></a>
+<form action="/book/<%= book.id %>/delete" method="POST">
+  <input type="hidden" name="_method" value="DELETE">
+  <button type="submit">DELETE</button>
+</form>
 </div>

@@ -159,8 +159,9 @@ async function addBook(book) {
     `,
     [book.title, authorID, book.quantity, genreID]
   );
-  return response;
+  return response.rows[0].id;
 }
+
 async function addAuthor(author) {
   const response = await pool.query(
     `
@@ -183,6 +184,11 @@ async function addGenre(genre) {
   );
   return response;
 }
+// ------ DELETE -----
+async function deleteBook(ID) {
+  const response = await pool.query(`DELETE FROM books WHERE id=$1`, [ID]);
+  return response;
+}
 
 module.exports = {
   stopPool,
@@ -199,4 +205,5 @@ module.exports = {
   addAuthor,
   updateGenre,
   addGenre,
+  deleteBook,
 };

@@ -1,6 +1,6 @@
 const queries = require("../db/queries");
 
-async function indexGET(req, res) {
+async function indexGET(req, res, next) {
   try {
     const index = await queries.getAllInfo();
     res.render("index", { index: index });
