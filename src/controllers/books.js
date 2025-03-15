@@ -1,6 +1,13 @@
 const queries = require("../db/queries");
 const { body, validationResult } = require("express-validator");
 
+const validator = [
+  body("title").trim().isLength({ min: 1, max: 100 }).escape(),
+  body("author").trim().isLength({ min: 1, max: 100 }).escape(),
+  body("genre").trim().isLength({ min: 1, max: 100 }).escape(),
+  body("quantity").trim().isNumeric(),
+];
+
 async function booksGet(req, res, next) {
   try {
     const books = await queries.getAllBooks();
@@ -30,18 +37,11 @@ async function bookEditGet(req, res, next) {
   }
 }
 
-const validator = [
-  body("title").trim().isLength({ min: 1, max: 100 }).escape(),
-  body("author").trim().isLength({ min: 1, max: 100 }).escape(),
-  body("genre").trim().isLength({ min: 1, max: 100 }).escape(),
-  body("quantity").trim().isNumeric(),
-];
-
 async function bookEditPost(req, res, next) {
   try {
     const ID = req.params.id;
     const errors = validationResult(req);
-    if (!errors.isEmpty) throw error("invalid input");
+    if (!errors.isEmpty) throw new Error("invalid input");
     const { title, author, genre, quantity } = req.body;
     await queries.updateBook({
       id: ID,

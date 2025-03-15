@@ -9,6 +9,7 @@
         </li>
     <% } %>
   </ul>
+  <a href=<%= `/authors/${author.id}/edit` %>><button>EDIT</button></a>
   <form action="/authors/<%= author.id %>/delete" method="POST">
   <input type="hidden" name="_method" value="DELETE">
   <button type="submit">DELETE</button>

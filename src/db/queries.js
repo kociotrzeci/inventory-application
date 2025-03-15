@@ -172,7 +172,7 @@ async function addAuthor(author) {
     `,
     [author.name]
   );
-  return response;
+  return response.rows[0].id;
 }
 async function addGenre(genre) {
   const response = await pool.query(
@@ -183,7 +183,7 @@ async function addGenre(genre) {
     `,
     [genre.name]
   );
-  return response;
+  return response.rows[0].id;
 }
 // ------ DELETE -----
 async function deleteBook(ID) {

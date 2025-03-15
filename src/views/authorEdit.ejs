@@ -1,13 +1,13 @@
-<div class="author-info">
-    <h4><%= author.name %></h4>
-  <ul>
-    <% for(const book of author.titles){ %>
-        <li>
-          <a href=<%=`/books/${book.id}`%>>
-            <h5><%=book.title%></h5>
-          </a>
-        </li>
-    <% } %>
-  </ul>
-
+<div class="author-add">
+  <form method="POST" action="/authors/<%= author.id %>/edit">
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      name="name"
+      minlength="1"
+      maxlength="100"
+      value="<%= author.name %>"
+    />
+    <button type="submit">Add</button>
+  </form>
 </div>
