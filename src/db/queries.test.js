@@ -8,6 +8,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
+  await queries.addAuthor({ name: "To be deleted" });
   await queries.stopPool();
 });
 describe("database interface GET operations", () => {
@@ -122,5 +123,14 @@ describe("database interface INSERT operations", () => {
     });
     const info = await queries.getGenreByID(11);
     expect(info.name).toBe("Added Gemre");
+  });
+});
+describe("database interface DELETE operations", () => {
+  it("rejects authors with books", async () => {
+    await expect(queries.deleteAuthor(2)).rejects.toThrow();
+  });
+  it("deletes empty author", async () => {
+    await queries.deleteAuthor(11);
+    await expect(queries.getAuthorByID(11)).rejects.toThrow();
   });
 });

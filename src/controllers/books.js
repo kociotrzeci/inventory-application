@@ -84,9 +84,13 @@ async function bookAddPost(req, res, next) {
 }
 
 async function bookDelete(req, res, next) {
-  const ID = req.params.id;
-  const response = await queries.deleteBook(ID);
-  res.redirect("/books");
+  try {
+    const ID = req.params.id;
+    const response = await queries.deleteBook(ID);
+    res.redirect("/books");
+  } catch (error) {
+    next(error);
+  }
 }
 module.exports = {
   booksGet,

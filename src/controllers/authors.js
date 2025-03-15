@@ -1,6 +1,6 @@
 const queries = require("../db/queries");
 
-async function authorsGET(req, res, next) {
+async function authorsGet(req, res, next) {
   try {
     const authors = await queries.getAllAuthors();
     res.render("authors", { authors: authors });
@@ -8,7 +8,7 @@ async function authorsGET(req, res, next) {
     next(error);
   }
 }
-async function authorGET(req, res, next) {
+async function authorGet(req, res, next) {
   try {
     const ID = req.params.id;
     const author = await queries.getAuthorByID(ID);
@@ -18,7 +18,16 @@ async function authorGET(req, res, next) {
   }
 }
 
+async function authorDeletePost(req, res, next) {
+  try {
+    const response = await queries.deleteAuthor(req.params.id);
+  } catch (error) {
+    next(error);
+  }
+  res.redirect("/authors");
+}
 module.exports = {
-  authorsGET,
-  authorGET,
+  authorsGet,
+  authorGet,
+  authorDeletePost,
 };

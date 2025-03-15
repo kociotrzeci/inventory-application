@@ -13,8 +13,9 @@ router.post("/book/:id/edit", books.bookEditPost);
 router.get("/books/add", books.bookAddGet);
 router.post("/books/add", books.bookAddPost);
 router.post("/book/:id/delete", books.bookDelete);
-router.get("/authors", authors.authorsGET);
-router.get("/authors/:id", authors.authorGET);
+router.get("/authors", authors.authorsGet);
+router.get("/authors/:id", authors.authorGet);
+router.post("/authors/:id/delete", authors.authorDeletePost);
 router.get("/genres", genres.genresGET);
 router.get("/genres/:id", genres.genreGET);
 

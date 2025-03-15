@@ -82,6 +82,7 @@ async function getAuthorByID(id) {
   return {
     titles: titles,
     name: author.rows[0].name,
+    id: id,
   };
 }
 
@@ -190,6 +191,18 @@ async function deleteBook(ID) {
   return response;
 }
 
+async function deleteAuthor(ID) {
+  const author = await pool.query(
+    "SELECT COUNT (*) FROM books WHERE author_id=$1",
+    [ID]
+  );
+  if (author.rows[0].count == 0) {
+    const response = await pool.query(`DELETE FROM authors WHERE id=$1`, [ID]);
+  } else {
+    throw new Error("Author have books, you cant delete him!");
+  }
+}
+
 module.exports = {
   stopPool,
   getAllInfo,
@@ -206,4 +219,5 @@ module.exports = {
   updateGenre,
   addGenre,
   deleteBook,
+  deleteAuthor,
 };
