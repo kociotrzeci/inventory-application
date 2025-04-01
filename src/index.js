@@ -8,6 +8,7 @@ const { router } = require("./routers/router.js");
 
 app.set("views", viewsPath);
 app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({ extended: true }));
 app.use("/", router);
 

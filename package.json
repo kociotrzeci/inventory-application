@@ -4,11 +4,15 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node .",
+    "dev": "concurrently \"nodemon --watch src --ext js,ejs,json,css src/index.js\" \"npm run scss\"",
+    "scss": "sass --watch src/scss/:src/public/"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^9.1.2",
     "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
     "env": "^0.0.2",
@@ -16,6 +20,12 @@
     "express-validator": "^7.2.1",
     "inventory-application": "file:",
     "jest": "^29.7.0",
-    "pg": "^8.13.3"
+    "node-sass-middleware": "^1.1.0",
+    "nodemon": "^3.1.9",
+    "pg": "^8.13.3",
+    "scss": "^0.2.4"
+  },
+  "devDependencies": {
+    "sass": "^1.86.1"
   }
 }
